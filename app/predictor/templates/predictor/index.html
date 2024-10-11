@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Главная страница</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body>
+    <div class="flex flex-col items-center justify-center mt-10">
+      <div class="grid grid-cols-3 w-full">
+        <form method="post" class="mb-6 w-full col-start-2 flex flex-col gap-2">
+          {% csrf_token %}
+          <div>
+            <label
+              for="large-input"
+              class="block mb-2 text-sm font-medium text-gray-900"
+              >Название фильма *</label
+            >
+            <input
+              type="text"
+              id="name"
+              name="name"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              placeholder="Введите название фильма"
+              required
+            />
+          </div>
+          <div>
+            <label
+              for="large-input"
+              class="block mb-2 text-sm font-medium text-gray-900"
+              >Комментарий *</label
+            >
+            <textarea
+              id="review"
+              rows="4"
+              name="review"
+              class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Введите Ваш комментарий.."
+            ></textarea>
+          </div>
+          <button
+            type="submit"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5"
+          >
+            Оценить
+          </button>
+        </form>
+        <div class="flex flex-col gap-6 col-start-2 w-full">
+          <h1 class="text-2xl font-bold text-center mb-5">История:</h1>
+          {% for review in reviews %}
+          <a
+            href="#"
+            class="block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 relative"
+          >
+            <span
+              class="border bg-white font-medium text-center p-0.5 leading-none rounded-full px-2 absolute -translate-y-1/2 translate-x-1/2 left-auto top-0 right-10"
+            >
+              {% if review.sentiment == 1 %}
+              <svg
+                class="w-6 h-6 text-gray-800 dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="#15803d"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M15.03 9.684h3.965c.322 0 .64.08.925.232.286.153.532.374.717.645a2.109 2.109 0 0 1 .242 1.883l-2.36 7.201c-.288.814-.48 1.355-1.884 1.355-2.072 0-4.276-.677-6.157-1.256-.472-.145-.924-.284-1.348-.404h-.115V9.478a25.485 25.485 0 0 0 4.238-5.514 1.8 1.8 0 0 1 .901-.83 1.74 1.74 0 0 1 1.21-.048c.396.13.736.397.96.757.225.36.32.788.269 1.211l-1.562 4.63ZM4.177 10H7v8a2 2 0 1 1-4 0v-6.823C3 10.527 3.527 10 4.176 10Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              {% else %}
+              <svg
+                class="w-6 h-6 text-gray-800 dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="#b91c1c"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M8.97 14.316H5.004c-.322 0-.64-.08-.925-.232a2.022 2.022 0 0 1-.717-.645 2.108 2.108 0 0 1-.242-1.883l2.36-7.201C5.769 3.54 5.96 3 7.365 3c2.072 0 4.276.678 6.156 1.256.473.145.925.284 1.35.404h.114v9.862a25.485 25.485 0 0 0-4.238 5.514c-.197.376-.516.67-.901.83a1.74 1.74 0 0 1-1.21.048 1.79 1.79 0 0 1-.96-.757 1.867 1.867 0 0 1-.269-1.211l1.562-4.63ZM19.822 14H17V6a2 2 0 1 1 4 0v6.823c0 .65-.527 1.177-1.177 1.177Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              {% endif %}
+            </span>
+            <span
+              class="border bg-white font-medium text-center p-0.5 leading-none rounded-full px-2 absolute -translate-y-1/2 left-auto top-0 right-15"
+              >{{review.rating}}/10</span
+            >
+
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">
+              {{review.name}}
+            </h5>
+            <p class="font-normal text-gray-700">{{review.text}}</p>
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
